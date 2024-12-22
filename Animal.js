@@ -1,10 +1,10 @@
 "use strict"
 console.log(`Animal class running ok`);
 
-// const sex = Object.freeze({
-//     female: "female",
-//     male: "male",
-// })
+const sex = Object.freeze({
+    female: "female",
+    male: "male",
+})
 
 
 class Animal {
@@ -15,6 +15,9 @@ class Animal {
     #personality
     #familyType
     #fosterCare
+
+
+    
 
 
     constructor (id, name, age, sex, personality, familyType, fosterCare) {
