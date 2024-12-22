@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Finder in shelters around you - FindYourSoulmate</title>
+    <style>
+        body {
+            font-family: 'Baskerville', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh; /* Permite crecer si el contenido excede el viewport */
+            color: #333;
+            overflow-x: hidden; /* Evita scroll horizontal innecesario */
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #2e6683;
+            text-align: center;
+            text-shadow: 0.125em 0.125em 0.3125em rgba(0, 0, 0, 0.3);
+            margin-bottom: 1.875em; /* 30px -> em */
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 1.875em; /* 30px -> em */
+            border-radius: 0.625em; /* 10px -> em */
+            box-shadow: 0 0.25em 0.625em rgba(0, 0, 0, 0.1); /* px -> em */
+            width: 80%;
+            max-width: 37.5em; /* 600px -> em */
+            text-align: center;
+        }
+
+
+        .container p {
+            font-size: 1.1rem;
+            margin: 0.625em 0; /* 10px -> em */
+        }
+
+        button {
+            background-color: #36998f;
+            color: #fff;
+            border: none;
+            padding: 0.625em 1.25em; /* 10px -> em, 20px -> em */
+            border-radius: 0.3125em; /* 5px -> em */
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+
+        button:hover {
+            background-color: #33454f;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 1.25em; /* 20px -> em */
+            margin-top: 1.875em; /* 30px -> em */
+            width: 80%;
+            max-width: 37.5em; /* 600px -> em */
+            text-align: center;
+            border-radius: 0.625em; /* 10px -> em */
+            box-shadow: 0 0.25em 0.625em rgba(0, 0, 0, 0.1); /* px -> em */
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 0.625em; /* 10px -> em */
+            border-radius: 0.3125em; /* 5px -> em */
+            border: 0.125em solid #fbb178; /* 2px -> em */
+            background-color: white;
+            cursor: pointer;
+        }
+
+        
+
+        select:hover {
+            border-color: #fe6f02;
+        }
+
+        @media (max-width: 48em) { /* 768px -> em */
+            .container {
+                width: 90%;
+            }
+            .block {
+                margin-bottom: 1.25em; /* 20px -> em */
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+<h1>✨FindYourSoulmate✨</h1>
+
+    <h3>Search and compare shelters in order to find your soulmate!</h3>
+
+    <p>From FYSM our goal is to gather the best families ever, that is why we
+        need you to answer a few questions. Let's find your soul...! Mate 😉... 
+    </p>
+
+</div>
+<br>
+<br>
+<br>
+<br>
+
+
+<div class="container">
+    <div class="block">
+
+        <h2>Soul Quizz 💘 </h2>
+
+    <p>What animal melts you heart? </p>
+    <select id="selectAnimalType">
+        <option value="" selected disabled> Select an option, hooman </option>
+        <option value="catValue">☀︎ Catto (miauMate) </option>
+        <option value="dogValue">☀︎ Doggie (guauMate) </option>
+    </select>
+    <br>
+    <br>
+
+    <p>What kind of soulmate are you searching for?</p>
+    <select id="selectMoodType">
+        <option value="" selected disabled> Select an option, hooman </option>
+        <option value="clingyValue">☀︎ Clingy </option>
+        <option value="independentValue">☀︎ Independent </option>
+        <option value="notSureMoodValue">☀︎ My love is infinite, idc </option>
+    </select>
+    <br>
+    <br>
+
+    <p> What kind of family do you imagine?</p>
+    <p><i>"The more the merrier" they say ...</i></p>
+    <select id="selectQuantityType">
+        <option value="" selected disabled> Select an option, hooman </option>
+        <option value="singleChildValue">☀︎ Only child, spoilt of course </option>
+        <option value="familyValue">☀︎ What is a family without brothers? </option>
+        <option value="notSureQuantityValue">☀︎ Whatever the destiny is bringing </option>
+    </select>
+    <br>
+    <br>
+    <button onclick="searchForSoulmate()"> SEEEEEARCH 🔍</button>
+
+
+    
+
+
+    <span id="resultSpan"></span>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+        <h2>Pet Data 🐾 </h2>
+
+        <label for="animalType">Animal:</label>
+        <select id="animalType">
+            <option value="" selected disabled> Select an option, hooman </option>
+            <option value="cat">catto</option>
+            <option value="dog">doggie</option>
+        </select>
+        <br><br>
+
+        <label for="animalId">Id:</label>
+        <input type="text" id="animalId" placeholder="Submit an ID ">
+        <br><br>
+
+        <label for="animalName">Name:</label>
+        <input type="text" id="animalName" placeholder="Submit a name">
+        <br><br>
+
+
+        <label for="animalAge">Age:</label>
+        <input type="number" id="animalAge" placeholder="Submit an age">
+        <br><br>
+
+        
+        <label for="animalSex">Sex:</label>
+        <select id="animalSex">
+            <option value="" selected disabled> Select an option, hooman </option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        <br><br>
+
+
+        <label for="animalPersonality">Personality:</label>
+        <select id="animalPersonality">
+            <option value="" selected disabled> Select an option, hooman </option>
+            <option value="clingy">Clingy</option>
+            <option value="independent">Independient</option>
+            <option value="whatever">Whatever</option>
+            
+        </select>
+        <br><br>
+
+
+        <label for="animalFamilyType"> Family of their dreams:</label>
+        <select id="selectAnimalFamilyType">
+            <option value="" selected disabled> Select an option, hooman </option>
+            <option value="singleChildValue"> Only child, spoilt of course </option>
+            <option value="familyValue"> What is a family without brothers? </option>
+            <option value="notSureQuantityValue"> Whatever the destiny is bringing </option>
+        </select>
+        <br><br>
+
+
+
+        <label for="animalSize">Size:</label>
+        <select id="animalSize">
+            <option value="" selected disabled> Select an option, hooman </option>
+            <option value="S">Small</option>
+            <option value="M">Medium</option>
+            <option value="L">Large</option>
+        </select>
+        <br><br>
+
+
+        <!-- fostercare(?) -->
+
+        <label for="animalBreed">Breed:</label>
+        <input type="text" id="animalBreed" placeholder="Submit a breed">
+        <br><br>
+
+
+
+        <label for="animalColor">Color:</label>
+        <input type="text" id="animalColor" placeholder="Submit the color">
+        <br><br>
+
+        
+
+
+        <button onclick="createNewAnimal()">Save pet</button>
+        <br><br>
+        <button onclick="createInstancePet()">Save instance</button>
+        <br><br>
+        <button onclick="deleteAnimal()">Delete per pet's name ✂️ </button>
+        <br><br>
+        <button onclick="showDataAnimal()"> Find per pet's name ⭐️ </button>
+        <br>
+        <br>
+
+        <div id="resultDivFoundAnimal"></div>
+        <div id="resultDiv"></div>
+
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+    <!-- Bloque para inputs de personas -->
+    <div class="block">
+        <h2>Adopter data 👋 </h2>
+    
+        <label for="adopterId">ID:</label>
+        <input type="number" id="adopterId" placeholder="Submit your ID">
+        <br><br>
+    
+        <label for="adopterName">Name:</label>
+        <input type="text" id="adopterName" placeholder="Submit your name">
+        <br><br>
+    
+        <label for="adopterLastName">Lastname:</label>
+        <input type="text" id="adopterLastName" placeholder="Submit your lastname">
+        <br><br>
+    
+        <label for="adopterFamilyType"> Family of your dreams:</label>
+        <select id="selectAdopterFamilyType">
+            <option value="" selected disabled> Select an option, hooman </option>
+            <option value="singleChildValue"> Only child, spoilt of course </option>
+            <option value="familyValue"> What is a family without brothers? </option>
+            <option value="notSureQuantityValue"> Whatever the destiny is bringing </option>
+        </select>
+        <br><br>
+    
+        <button onclick="submitNewAdopter()">Save</button>
+
+        <br><br>
+    </div>
+
+    <script src="Animal.js"></script>
+    <script src="Cat.js"></script>
+    <script src="Dog.js"></script>
+    <script src="Adopter.js"></script>
+    <script src="Shelter.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+
+
+    </script>
+
+
+</body>
+</html>
