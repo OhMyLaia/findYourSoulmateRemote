@@ -33,80 +33,56 @@ const notFoundMessage = (notFoundElement) => `"${notFoundElement}" is not in our
 
 
 function newAnimalInputs() {
-    // let animalType = document.getElementById("animalType").value;
-    // let animalId = document.getElementById("animalId").value;
-    // let animalName = document.getElementById("animalName").value;
-    // let animalAge = document.getElementById("animalAge").value;
-    // let animalSex = document.getElementById("animalSex").value;
-    // let animalPersonality = document.getElementById("animalPersonality").value; // NO, porque sera un array, pero bueno
-    // let animalFamilyType = document.getElementById("selectAnimalFamilyType").value; // me da boolean lol
-    // let animalSize = document.getElementById("animalSize").value;
-    // let animalBreed = document.getElementById("animalBreed").value;
-    // let animalColor = document.getElementById("animalColor").value;
+    let animalType = document.getElementById("animalType").value;
+    let animalId = document.getElementById("animalId").value;
+    let animalName = document.getElementById("animalName").value;
+    let animalAge = document.getElementById("animalAge").value;
+    let animalSex = document.getElementById("animalSex").value;
+    let animalPersonality = document.getElementById("animalPersonality").value; // NO, porque sera un array, pero bueno
+    let animalFamilyType = document.getElementById("selectAnimalFamilyType").value; // me da boolean lol
+    let animalSize = document.getElementById("animalSize").value;
+    let animalBreed = document.getElementById("animalBreed").value;
+    let animalColor = document.getElementById("animalColor").value;
 
 
-    let animalType = "cat"
-    let animalId = "12345"
-    let animalName = "pepe"
-    let animalAge = "35"
-    let animalSex = "male"
-    let animalPersonality = "whatever"
-    let animalFamilyType = "brothers"
-    let animalSize = "M"
-    let animalBreed = "aria"
-    let animalColor = "white"
+    // let animalType = "cat"
+    // let animalId = "12345"
+    // let animalName = "pepe"
+    // let animalAge = "35"
+    // let animalSex = "male"
+    // let animalPersonality = "whatever"
+    // let animalFamilyType = "brothers"
+    // let animalSize = "M"
+    // let animalBreed = "aria"
+    // let animalColor = "white" if (!animalType) { console.log(`error`) return true }} 
     
+    if (!animalId || isNaN(animalId) || animalId.length !== 5) { console.log(`error`); return true } 
+    
+    if (!animalName) { console.log(`error`); return true } 
+    
+    if (!animalAge || isNaN(animalAge)) { console.log(`error`); return true } 
+    
+    if (!animalSex) { console.log(`error`); return true } 
+    
+    if (!animalPersonality) { console.log(`error`); return true } 
+    
+    if (!animalSize) { console.log(`error`); return true}
+    
+    if (!animalBreed || isNaN(animalBreed) === false) { console.log(`error`); return true} 
+    
+    if (!animalColor || isNaN(animalColor) === false) { console.log(`error`); return true }
 
-
-    if (animalType === null || animalType === undefined) {
-        console.log(`error`)
-        return true;
-
-    } else if (isNaN(animalId) || animalId.length !== 5 || animalId === null || animalId === undefined) {
-        console.log(`error`)
-        return true;
-
-    } else if (animalName === null || animalName === undefined) {
-        console.log(`error`)
-        return true;
-
-    } else if (animalAge === null || animalAge === undefined || isNaN(animalAge)) {
-        console.log(`error`)
-        return true;
-
-    } else if (animalSex === null || animalSex === undefined) {
-        console.log(`error`)
-        return true;
-
-    } else if (animalPersonality === null || animalPersonality === undefined) {
-        console.log(`error`)
-        return true;
-
-    } else if (animalSize === null || animalSize === undefined) {
-        console.log(`error`)
-        return true;
-
-    } else if ( isNaN(animalBreed) === false || animalBreed === null || animalBreed === undefined) {
-        console.log(`error`)
-        return true;
-
-    } else if ( isNaN(animalColor) === false || animalColor === null || animalColor === undefined) {
-        console.log(`error`)
-        return true;
-
-    } else {
-        return {
-            animalType, 
-            animalId,
-            animalName,
-            animalAge,
-            animalSex,
-            animalPersonality,
-            animalFamilyType,
-            animalSize,
-            animalBreed,
-            animalColor
-        }
+    return {
+        animalType, 
+        animalId,
+        animalName,
+        animalAge,
+        animalSex,
+        animalPersonality,
+        animalFamilyType,
+        animalSize,
+        animalBreed,
+        animalColor
     }
 }
 
@@ -167,8 +143,8 @@ function createNewAnimal () {
 
     console.table(allAnimalsArr);
     // alert(`${newCatInstance.getName()} submitted successfully!`);
+    }
 
-}
 
 
 function findAnimal(animalToBeFound = "") { //retorna (objeto encontrado + indice de ObjEnc) o false
