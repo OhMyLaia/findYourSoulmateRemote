@@ -16,11 +16,11 @@ class Cat extends Animal {
     }
 
 
-    getSize() { return this.#size }
+    get size() { return this.#size }
 
-    getBreed() { return this.#breed }
+    get breed() { return this.#breed }
 
-    getColor() { return this.#color }
+    get color() { return this.#color }
 
 
 
@@ -29,9 +29,9 @@ class Cat extends Animal {
         return `
         <pre>
         ${super.toString()}
-        Size: ${this.getSize()}
-        Breed: ${this.getBreed()}
-        Color: ${this.getColor()}
+        Size: ${this.size}
+        Breed: ${this.breed}
+        Color: ${this.color}
         </pre>
         `
     

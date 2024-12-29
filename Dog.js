@@ -16,21 +16,21 @@ class Dog extends Animal {
         this.#color = color;
     }
 
-    getSize() { return this.#size }
-    getBreed() { return this.#breed }
-    getColor() { return this.#color }
+    get size() { return this.#size }
+    get breed() { return this.#breed }
+    get color() { return this.#color }
 
-    setSize(newSize) { this.#size = newSize }
-    setBreed(newBreed) { this.#breed = newBreed }
-    setColor(newColor) { this.#color = newColor }
+    set size(newSize) { this.#size = newSize }
+    set breed(newBreed) { this.#breed = newBreed }
+    set color(newColor) { this.#color = newColor }
 
     toString() {
             return `
             <pre>
             ${super.toString()}
-            Size: ${this.getSize()}
-            Breed: ${this.getBreed()}
-            Color: ${this.getColor()}
+            Size: ${this.size}
+            Breed: ${this.breed}
+            Color: ${this.color}
             </pre>
             `
         

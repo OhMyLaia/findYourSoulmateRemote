@@ -7,21 +7,24 @@ class Shelter {
     #name
     #cityCode
     #petsArray
+
+    static messageNotFound = `No shelters found`;
+    static idGenerator = 0;
     
 
-    constructor (id, name, cityCode) {
-        this.#id = parseInt(id);
+    constructor (name, cityCode) {
+        this.#id = ++Shelter.idGenerator;
         this.#name = name;
         this.#cityCode = parseInt(cityCode);
         this.#petsArray = [];
     }
 
-    getId() { return this.#id }
-    getName() { return this.#name }
-    getCityCode() { return this.#cityCode }
+    get id() { return this.#id }
+    get name() { return this.#name }
+    get cityCode() { return this.#cityCode }
 
-    setId(newId) { this.#id = newId }
-    setName(newName) { this.#name = newName }
+    set id(newId) { this.#id = newId }
+    set name(newName) { this.#name = newName }
 
     addAnimalToShelter(newAnimal) {
         this.#petsArray.push(newAnimal);
@@ -35,11 +38,14 @@ class Shelter {
             showPetsArrayData = pet.toString().join("<br>");
         }
 
-        return`
-        Id: ${this.getId()}
-        Name: ${this.getName()}
-        CityCode: ${this.getCityCode()}
-        Animals in the shelter: ${showPetsArrayData}
+        return` <pre>
+        Id: ${this.id}
+        Name: ${this.name}
+        CityCode: ${this.#cityCode}
+        
+        Animals in the shelter:
+        ${this.#petsArray.length === 0 ? Shelter.messageNotFound : this.#petsArray.join("<br>")}
+        </pre>
         `
     }
 }

@@ -16,12 +16,11 @@ class Animal {
     #familyType
     #fosterCare
 
+    static idGenerator = 0;
 
-    
 
-
-    constructor (id, name, age, sex, personality, familyType, fosterCare) {
-        this.#id = parseInt(id);
+    constructor (name, age, sex, personality, familyType, fosterCare) {
+        this.#id = ++Animal.idGenerator;
         this.#name = name;
         this.#age = parseInt(age);
         this.#sex = sex;
@@ -30,16 +29,16 @@ class Animal {
         this.#fosterCare = fosterCare;
     }
 
-    getId() { return this.#id }
-    getName() { return this.#name }
-    getAge() { return this.#age }
-    getSex() { return this.#sex }
-    getPersonality() { return this.#personality }
-    getFamilyType() { return this.#familyType }
-    getFosterCare() { return this.#fosterCare }
+    get id() { return this.#id }
+    get name() { return this.#name }
+    get age() { return this.#age }
+    get sex() { return this.#sex }
+    get personality() { return this.#personality }
+    get familyType() { return this.#familyType }
+    get fosterCare() { return this.#fosterCare }
 
 
-    setId(newId) {
+    set id(newId) {
 
         let pass = prompt(`Magic password required: `);
         if (pass = 727284) {
@@ -50,20 +49,20 @@ class Animal {
     }
 
 
-    setName(newName) { return this.#name = newName }
+    set name(newName) { return this.#name = newName }
 
-    setFosterCare() { return this.#fosterCare = true }
+    setFosterCare() { return this.#fosterCare = !this.#fosterCare }
 
     toString() {
         return `
         <pre>
-        Id: ${this.getId()}
-        Name: ${this.getName()}
-        Age: ${this.getAge()}
-        Sex: ${this.getSex()}
-        Personality type: ${this.getPersonality()}
-        Purrfect family type: ${this.getFamilyType()}
-        Currently in foster care: ${this.getFosterCare()}
+        Id: ${this.id}
+        Name: ${this.name}
+        Age: ${this.age}
+        Sex: ${this.sex}
+        Personality type: ${this.personality}
+        Purrfect family type: ${this.familyType}
+        Currently in foster care: ${this.fosterCare}
         </pre>
         `
     }

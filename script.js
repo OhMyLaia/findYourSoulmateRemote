@@ -1,40 +1,17 @@
 "use strict"
 console.log(`Script running ok`);
 
-
 const allAnimalsArr = [];
 const catsArr = [];
 const dogsArr = [];
-
 const adoptersArr = [];
-
 const sheltersArr = [];
 
 
-let newHardcodedCatto = new Cat (12345, "Esme-chan", 6, "female", "clingy", "family?...whatever", true, "S", "siamese", "white/brown");
-let newHardcodedDoggie = new Dog (67890, "Turron", 31, "male", "whatever", "brothers? yes!", true, "L", "lupus vulgaris", "brown");
-let newHardcodedAdopter = new Adopter (45673, "Laia", "Martinez", "familyValue");
-let newHardcodedShelter = new Shelter (11276, "RainbowCity", 902);
-
-
-allAnimalsArr.push(newHardcodedCatto, newHardcodedDoggie);
-catsArr.push(newHardcodedCatto);
-dogsArr.push(newHardcodedDoggie);
-adoptersArr.push(newHardcodedAdopter);
-sheltersArr.push(newHardcodedShelter);
-
-// resultDiv.innerHTML = newHardcodedDoggie.toString();
-// resultDiv.innerHTML = newHardcodedCatto.toString();
-
-let resultDiv = document.getElementById("resultDivFoundAnimal");
-
-const normalizeString = (stringInput) => stringInput.toUpperCase().trim();
-const notFoundMessage = (notFoundElement) => `"${notFoundElement}" is not in our data base... `;
-
+// PET CRUD //
 
 function newAnimalInputs() {
     let animalType = document.getElementById("animalType").value;
-    let animalId = document.getElementById("animalId").value;
     let animalName = document.getElementById("animalName").value;
     let animalAge = document.getElementById("animalAge").value;
     let animalSex = document.getElementById("animalSex").value;
@@ -56,25 +33,22 @@ function newAnimalInputs() {
     // let animalBreed = "aria"
     // let animalColor = "white" if (!animalType) { console.log(`error`) return true }} 
     
-    if (!animalId || isNaN(animalId) || animalId.length !== 5) { console.log(`error`); return true } 
+    if (!animalName) { showMessageAnimal(missingDataMessage("name")); return false }
     
-    if (!animalName) { console.log(`error`); return true } 
+    if (!animalAge || isNaN(animalAge)) { showMessageAnimal(missingDataMessage("age")); return false }
     
-    if (!animalAge || isNaN(animalAge)) { console.log(`error`); return true } 
+    if (!animalSex) { showMessageAnimal(missingDataMessage("sex")); return false }
     
-    if (!animalSex) { console.log(`error`); return true } 
+    if (!animalPersonality) { showMessageAnimal(missingDataMessage("personality")); return false }
     
-    if (!animalPersonality) { console.log(`error`); return true } 
+    if (!animalSize) { showMessageAnimal(missingDataMessage("size")); return false }
     
-    if (!animalSize) { console.log(`error`); return true}
+    if (!animalBreed || isNaN(animalBreed) === false) { showMessageAnimal(missingDataMessage("breed")); return false }
     
-    if (!animalBreed || isNaN(animalBreed) === false) { console.log(`error`); return true} 
-    
-    if (!animalColor || isNaN(animalColor) === false) { console.log(`error`); return true }
+    if (!animalColor || isNaN(animalColor) === false) { showMessageAnimal(missingDataMessage("color")); return false }
 
     return {
         animalType, 
-        animalId,
         animalName,
         animalAge,
         animalSex,
@@ -88,22 +62,32 @@ function newAnimalInputs() {
 
 // constructor(id, name, age, sex, personality, familyType, fosterCare, size, breed, color) {
 //     // 
-function createInstancePet() {
+function createInstances() {
 
-    let newInstance = new Cat (12345, "dafne", 4, "female", "clingy", "only child", false, "s", "european", "black/white")
+    let newInstance = new Cat ("dafne", 4, "female", "clingy", "only child", false, "s", "european", "black/white")
 
-    resultDiv.innerHTML = `done`
+    let newHardcodedCatto = new Cat ("Esme-chan", 6, "female", "clingy", "family?...whatever", true, "S", "siamese", "white/brown");
+    let newHardcodedDoggie = new Dog ("Turron", 31, "male", "whatever", "brothers? yes!", true, "L", "lupus vulgaris", "brown");
+    let newHardcodedAdopter = new Adopter (12345, "Laia", "Martinez", "familyValue");
+    let newHardcodedShelter = new Shelter ("RainbowCity", 902);
+
+
+    allAnimalsArr.push(newHardcodedCatto, newHardcodedDoggie);
+    catsArr.push(newHardcodedCatto);
+    dogsArr.push(newHardcodedDoggie);
+    adoptersArr.push(newHardcodedAdopter);
+    sheltersArr.push(newHardcodedShelter);
+
+    alert(`consider it done baby`);
 }
 
 
 function createNewAnimal () {
 
-    let errorMessage = `Invalid or incorrect data.`;
-    let resultDiv = document.getElementById("resultDivFoundAnimal");
+    cleanDiv()
 
     let {
         animalType,
-        animalId,
         animalName,
         animalAge,
         animalSex,
@@ -114,108 +98,171 @@ function createNewAnimal () {
         animalColor
     } = newAnimalInputs();
 
-    let newCatInstance;
-    let newDogInstance;
 
     // a partir de este punto tengo que estar segura de que tengo un objeto animal VALIDO
 
-    if (newAnimalInputs() === true) {
-        alert(errorMessage);
-        return alert(`Animal could not be created, missing data, mission aborted`);
-    }
+    if (newAnimalInputs() === false) { return showMessageAnimal(failureMessage("animal", "created" + " Maybe some data is missing...")); }
 
     if (animalType === "cat") {
-        newCatInstance = new Cat (animalId, animalName, animalAge, animalSex,
+        const newCatInstance = new Cat (animalName, animalAge, animalSex,
             animalPersonality, animalFamilyType, false, animalSize, animalBreed, animalColor);
         
         catsArr.push(newCatInstance);
         allAnimalsArr.push(newCatInstance);
-        resultDiv.innerHTML = newCatInstance.toString()
+        showMessageAnimal(newCatInstance.toString());
 
-        } else if (animalType === "dog") {
-            newDogInstance = new Dog (animalId, animalName, animalAge, animalSex,
-                animalPersonality, animalFamilyType, false, animalSize, animalBreed, animalColor);
-            
-            dogsArr.push(newDogInstance);
-            allAnimalsArr.push(newDogInstance);
-            resultDiv.innerHTML = newDogInstance.toString();
-        }
+    } else if (animalType === "dog") {
+        const newDogInstance = new Dog (animalName, animalAge, animalSex,
+            animalPersonality, animalFamilyType, false, animalSize, animalBreed, animalColor);
+        
+        dogsArr.push(newDogInstance);
+        allAnimalsArr.push(newDogInstance);
+        showMessageAnimal(newDogInstance.toString());
 
-    console.table(allAnimalsArr);
-    // alert(`${newCatInstance.getName()} submitted successfully!`);
+    } else {
+        showMessageAnimal(failureMessage("pet", "created"));
     }
 
-
-
-function findAnimal(animalToBeFound = "") { //retorna (objeto encontrado + indice de ObjEnc) o false
-
-    let userAnimalName = document.getElementById("animalName").value;
-    animalToBeFound = normalizeString(userAnimalName);
-    console.log(`animaltobefound -> ${animalToBeFound}`)
-    // let normalizedAnimalName = userAnimalName.trim().toUpperCase();
-    let foundAnimal;
-    let actualAnimal;
-
-    let indexOfFoundAnimal = 0;
-
-    foundAnimal = allAnimalsArr.find(animal => animal.getName().toUpperCase() === animalToBeFound);
-    indexOfFoundAnimal = allAnimalsArr.findIndex(animal => animal.getName().toUpperCase() === animalToBeFound);
-    console.log(`foundAnimal -> ${foundAnimal}`)
-    console.log(`indexOfFoundAnimal -> ${indexOfFoundAnimal}`)
-
-
-
-    // for (let i = 0; i < allAnimalsArr.length; i++) {
-    //     actualAnimal = allAnimalsArr[i];
-    //     console.log(`animales -> ${actualAnimal}`);
-
-    //     if (animalToBeFound === actualAnimal.getName().toUpperCase()) {
-    //         console.log(actualAnimal.getName());
-    //         foundAnimal = actualAnimal;
-    //         indexOfFoundAnimal = i;
-    //         console.log(`index foundanimal -> ${indexOfFoundAnimal}`)
-    //         break;
-    //     }
-    // }
-    // console.log(`animal encontrado despues del for -> ${foundAnimal}`)
-        if (foundAnimal !== undefined && foundAnimal !== null && indexOfFoundAnimal !== -1) {
-            // resultDiv.innerHTML = foundAnimal.toString();
-            return {foundAnimal, indexOfFoundAnimal};
-        } else {
-            resultDiv.innerHTML = notFoundMessage(userAnimalName);
-            return {undefined, indexOfFoundAnimal};
-        }
+    console.table(allAnimalsArr);
 }
 
 
 function deleteAnimal() {
 
-    let animalNameInput = document.getElementById("animalName").value;
-    let animalToBeFound = normalizeString(animalNameInput);
-    let {foundAnimal, indexOfFoundAnimal} = findAnimal(animalToBeFound);
-    let confirmDeleting = confirm(`Do you want to delete ${animalNameInput}?`);
+    cleanDiv()
 
-    if (confirmDeleting) {
-        allAnimalsArr.splice(indexOfFoundAnimal, 1);
-        resultDiv.innerHTML = `${animalNameInput} deleted from our database.`
+    let animalId = document.getElementById("animalId").value;
+    let foundAnimalIndex = toFindIndexOfAnimal(animalId);
+
+    if (foundAnimal) {
+        let confirmDeleting = confirm(`Do you want to delete ${animalNameInput}?`);
+
+        if (confirmDeleting) {
+            allAnimalsArr.splice(foundAnimalIndex, 1);
+            showMessageAnimal(successMessage(animalId, "deleted"));
+    
+        } else {
+            showMessageAnimal(`Cancelled.`)
+        }
 
     } else {
-        resultDiv.innerHTML = `Cancelled.`
+        showMessageAnimal(notFoundMessage(animalId));
     }
+
+
 }
 
 
 function showDataAnimal() {
-    let animalNameInput = document.getElementById("animalName").value;
-    let animalToBeFound = normalizeString(animalNameInput);
-    let {foundAnimal, indexOfFoundAnimal} = findAnimal(animalToBeFound);
 
-    console.log(`foundanimal -> ${foundAnimal}`);
+    cleanDiv()
 
-    if (foundAnimal !== undefined && foundAnimal !== null && indexOfFoundAnimal !== -1) {
-        console.log(`dentro del if foundanimal -> ${foundAnimal}`);
-        resultDiv.innerHTML = foundAnimal.toString();
+    let animalId = document.getElementById("animalId").value;
+    let foundAnimal = toFindAnimal(animalId);
+
+    console.log(`foundanimal is -> ${foundAnimal}`);
+
+    if (foundAnimal) {
+        console.log(`dentro del if, foundanimal -> ${foundAnimal}`);
+        showMessageAnimal(foundAnimal.toString());
     } else {
-        resultDiv.innerHTML = notFoundMessage(animalNameInput);
+        showMessageAnimal(notFoundMessage(animalNameInput));
+    }
+}
+
+
+
+// ADOPTER CRUD //
+
+
+function newAdopterInputs() {
+
+    cleanDiv()
+
+    let adopterId = document.getElementById("adopterId").value;
+    let adopterName = document.getElementById("adopterName").value;
+    let adopterLastName = document.getElementById("adopterLastName").value;
+    let adopterFamilyType = document.getElementById("selectAdopterFamilyType").value;
+
+    if (!adopterId) { showMessageAdopter(missingDataMessage("id")); return false }
+    
+    if (!adopterName) { showMessageAdopter(missingDataMessage("name")); return false }
+    
+    if (!adopterLastName) { showMessageAdopter(missingDataMessage("last name")); return false }
+    
+    if (!adopterFamilyType) { showMessageAdopter(missingDataMessage("family type")); return false }
+    
+    
+    return {
+        adopterId, 
+        adopterName,
+        adopterLastName,
+        adopterFamilyType
+    }
+}
+
+
+function createNewAdopter() {
+
+    cleanDiv()
+
+    let {
+        adopterId,
+        adopterName,
+        adopterLastName,
+        adopterFamilyType
+    } = newAdopterInputs();
+
+    // a partir de este punto tengo que estar segura de que tengo un objeto adopter VALIDO
+
+    if (newAdopterInputs() === false) { return showMessageAdopter(failureMessage("adopter", "created")); }
+
+    const newAdopterInstance = new Adopter (adopterId, adopterName, adopterLastName, adopterFamilyType);
+    
+    adoptersArr.push(newAdopterInstance);
+    showMessageAdopter(newAdopterInstance.toString())
+    console.table(adoptersArr);
+}
+
+
+function deleteAdopter() {
+
+    cleanDiv()
+
+    let adopterId = document.getElementById("adopterId").value;
+    let foundAdopter = toFindIndexOfAdopter(adopterId);
+
+    if (foundAdopter) {
+        let confirmDeleting = confirm(`Do you want to delete ${adopterId}?`);
+
+        if (confirmDeleting) {
+            adoptersArr.splice(foundAdopter, 1);
+            showMessageAdopter(successMessage(adopterId, "deleted"));
+
+        } else {
+            showMessageAdopter(`Cancelled.`)
+        }
+
+    } else {
+        showMessageAdopter(notFoundMessage(adopterId));
+    }
+
+}
+
+
+function showDataAdopter() {
+
+    cleanDiv()
+
+    let adopterId = document.getElementById("adopterId").value;
+    let foundAdopter = toFindAdopter(adopterId);
+
+    console.log(`foundAdopter is -> ${foundAdopter}`);
+
+    if (foundAdopter) {
+        console.log(`dentro del if foundAdopter -> ${foundAdopter}`);
+        showMessageAdopter(foundAdopter.toString());
+    } else {
+        showMessageAdopter(notFoundMessage(adopterId));
     }
 }
