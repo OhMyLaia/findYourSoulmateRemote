@@ -298,12 +298,57 @@
         <br><br>
     </div>
 
+
+    <div class="form-container">
+
+        <h2>Login 🔐</h2>
+
+        <label for="username">Username:</label>
+        <input type="text" id="usernameInputLogin" placeholder="your username">
+        <br><br>
+
+        <label type="text" id="password">Password:</label>
+        <input type="password" id="passwordInputLogin" placeholder="your secret password">
+        <br><br>
+
+        <button onclick="loginUser()">Login</button>
+        <br><br>
+
+        <div id="resultDivLogin"></div>
+    </div>
+
+    <br><br>
+
+    <div class="form-container">
+
+    <h2>Register 🔏</h2>
+
+        <label for="username">Username:</label>
+        <input type="text" id="usernameInputReg" placeholder="cool username">
+        <br><br>
+
+        <label for="email">Email:</label>
+        <input type="text" id="emailInputReg" placeholder="example@email.com">
+        <br><br>
+
+        <label type="text" id="password">Password:</label>
+        <input type="password" id="passwordInputReg" placeholder="secret password">
+        <br><br>
+
+        <button onclick="registerUser()">Register</button>
+        <br><br>
+
+        <div id="resultDivReg"></div>
+    </div>
+
+    <script src="User.js"></script>
     <script src="Animal.js"></script>
     <script src="Cat.js"></script>
     <script src="Dog.js"></script>
     <script src="Adopter.js"></script>
     <script src="Shelter.js"></script>
     <script src="functions.js"></script>
+    <script src="login.js"></script>
     <script src="script.js"></script>
 
     <script>
