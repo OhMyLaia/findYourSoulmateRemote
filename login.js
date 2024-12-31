@@ -79,31 +79,93 @@ function registerUser() {
 
 }
 
+// añadir delay para simular llamada al servidor
 function loginUser() {
 
-    let usernameInput = document.getElementById("usernameInputLogin").value;
-    let passwordInput = document.getElementById("passwordInputLogin").value;
-    let usernameNormalized = normalizeString(usernameInput);
-    let foundUser = toFindUserByUsername(usernameNormalized);
+    loginAttempt();
+}
 
 
+function delay(num) {
+    // num * 1000 no lo estoy almacenando en ningun sitio,
+    // solo vive ahi, cuando salimos son segundos
+    return new Promise( resolve => setTimeout (resolve, num * 1000));
+}
 
-    if (!usernameInput) { return showMessageLogin(missingDataMessage("username"))};
-    if (!passwordInput) { return showMessageLogin(missingDataMessage("password"))};
+async function serverConnectionSimulator() {
 
-    if (!foundUser) {
-        return showMessageLogin(couldNotVerifyData("user", "It does not exist in our database."));
+        return new Promise (async (resolve, reject) => {
+            // math random * 10 * 1.000 -> * 10.000 (msg)
+            let randomTime = 2 // Math.random() * 10;
+            await delay(randomTime);
 
-    } else {
+            if (randomTime >= 5) {
+                // hemos esperado demasiado, el servidor no conecta
+                // aqui gestionamos el error
+                reject(notFoundMessage("server"));
+            } else {
+                resolve();
+            }
+        })
+}
+
+
+async function asyncUserValidationSim(foundUser, passwordInput) {
+    
+    return new Promise (async (resolve, reject) => {
+        let randomTime = Math.random() * 10;
+        await delay(randomTime);
+
+        console.log(`founduser -> ${foundUser} y la passw -> ${foundUser.password} y el input -> ${passwordInput}`)
+
+        if (!foundUser) {
+            return reject(showMessageLogin(couldNotVerifyData("user", "It does not exist in our database.")));
+        }
+
         if (foundUser.password === passwordInput) {
             // entrar como usuario
-            showMessageLogin(successMessage("Hello again!", "Login"));
+            return resolve(showMessageLogin(successMessage("Hello again!", "Login")));
 
         } else {
-            showMessageLogin(couldNotVerifyData("password or username", "Please, submit the right data"));
+            return reject(showMessageLogin(couldNotVerifyData("password or username", "Please, submit the right data")));
         }
+    })
+}
+
+async function loginAttempt() {
+
+        // error:
+        // que no se encuentre el usuario
+        // que no se la password correcta
+        // que el servidor no responda
+
+        cleanDivGeneric("resultDivLogin");
+
+    try {
+        await serverConnectionSimulator();
+
+        let usernameInput = document.getElementById("usernameInputLogin").value;
+        let passwordInput = document.getElementById("passwordInputLogin").value;
+        let usernameNormalized = normalizeString(usernameInput);
+        let foundUser = toFindUserByUsername(usernameNormalized);
+    
+        if (!usernameInput) { return showMessageLogin(missingDataMessage("username"))};
+        if (!passwordInput) { return showMessageLogin(missingDataMessage("password"))};
+
+        try {
+            await asyncUserValidationSim(foundUser, passwordInput);
+
+        } catch (error) {
+            console.log(error);
+            showMessageLogin(error);
+        }
+
+    } catch (error) {
+        alert(error);
     }
 }
+
+
 
 // find your pawMate
 // /^[a-zA-Z0-9_-]{3,15}$/ ->
