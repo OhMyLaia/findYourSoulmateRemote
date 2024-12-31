@@ -6,7 +6,7 @@ const normalizeString = stringInput => stringInput.toUpperCase().trim();
 const toFindAnimal = id => allAnimalsArr.find(animal => animal.id === id);
 const toFindAdopter = id => adoptersArr.find(adopter => adopter.id === id);
 const toFindShelter = id => adoptersArr.find(shelter => shelter.id === id);
-const toFindUserByUsername = username => usersArr.find( user => user.username === username);
+const toFindUserByUsername = username => usersArr.find( user => normalizeString(user.username) === username);
 const toFindUserByEmail = email => usersArr.find(user => user.email === email);
 const toFindPassword = pass => usersArr.find(user => user.password === pass);
 

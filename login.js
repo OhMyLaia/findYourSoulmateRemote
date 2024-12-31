@@ -5,20 +5,22 @@ const usersArr = [];
 
 function verifyUsername(usernameToVerify) {
 
-    const regex = /^[a-zA-Z0-9_-]{3,15}$/;
+    const regexUsername = /^[a-zA-Z0-9_-]{3,15}$/;
     let foundUsername = toFindUserByUsername(usernameToVerify);
 
-    if (!regex.test(usernameToVerify)) {
-        return alert(invalidDataMessage("username", "The username may only contain letters, numbers, underscores, and hyphens, with a length between 3 and 15 characters."))
+    if (!regexUsername.test(usernameToVerify)) {
+        alert(invalidDataMessage("username", "The username may only contain letters, numbers, underscores, and hyphens, with a length between 3 and 15 characters."))
         // return alert(`${invalidDataMessage("username")} Usernames must have minimum 3 and maximum 15
         // characters, also can include letters, numbers and dashes/underscores. `)
+        return false
     }
 
     if (foundUsername) {
-        return alert(alreadyExistsMessage("username"));
+        alert(alreadyExistsMessage("username"));
+        return false
     }
 
-    return usernameToVerify;
+    return true
 }
 
 function verifyEmail(emailToVerify) {
@@ -27,25 +29,28 @@ function verifyEmail(emailToVerify) {
     let foundEmail = toFindUserByEmail(emailToVerify);
 
     if (!emailRegex.test(emailToVerify)) {
-        return alert(invalidDataMessage("email"));
+        alert(invalidDataMessage("email"));
+        return false
     }
 
     if (foundEmail) {
-        return alert(alreadyExistsMessage("email"));
+        alert(alreadyExistsMessage("email"));
+        return false
     }
 
-    return emailToVerify;
+    return true
 }
 
 function verifyPassword(passwordToVerify) {
     
-    let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,15}$/;
+    let passwordRegex = /^[A-Za-z\d]{5,15}$/;
 
     if (!passwordRegex.test(passwordToVerify)) {
-        return alert(couldNotVerifyData("password", "The password may only contain letters and numbers, with a length between 6 and 15 characters."))
+        alert(couldNotVerifyData("password", "The password may only contain letters and numbers, with a length between 5 and 15 characters."))
+        return false
     }
 
-    return passwordToVerify;
+    return true;
 }
 
 function registerUser() {
@@ -54,16 +59,18 @@ function registerUser() {
     let emailInput = document.getElementById("emailInputReg").value;
     let passwordInput = document.getElementById("passwordInputReg").value;
 
-    if (!usernameInput) { return showMessageLogin(missingDataMessage("username"))};
-    if (!emailInput) { return showMessageLogin(missingDataMessage("email"))};
-    if (!passwordInput) { return showMessageLogin(missingDataMessage("password"))};
+    if (!usernameInput) { return showMessageReg(missingDataMessage("username"))};
+    if (!emailInput) { return showMessageReg(missingDataMessage("email"))};
+    if (!passwordInput) { return showMessageReg(missingDataMessage("password"))};
 
     let usernameNormalized = normalizeString(usernameInput);
     let validUsername = verifyUsername(usernameNormalized);
-    let validEmail = verifyEmail(emailInput);
+    let emailNormalized = normalizeString(emailInput)
+    let validEmail = verifyEmail(emailNormalized);
+    let validPassword = verifyPassword(passwordInput);
 
-    if (validUsername && validEmail) {
-        const newUser = new User (usernameInput, validEmail, passwordInput);
+    if (validUsername && validEmail && validPassword) {
+        const newUser = new User (usernameInput, emailInput, passwordInput);
         usersArr.push(newUser);
         showMessageReg(`${successMessage("Nice!", "Registration")}<br>Save your ID number, you will use it!<br>${newUser.toString()}`)
     } else {
@@ -79,6 +86,8 @@ function loginUser() {
     let usernameNormalized = normalizeString(usernameInput);
     let foundUser = toFindUserByUsername(usernameNormalized);
 
+
+
     if (!usernameInput) { return showMessageLogin(missingDataMessage("username"))};
     if (!passwordInput) { return showMessageLogin(missingDataMessage("password"))};
 
@@ -87,6 +96,7 @@ function loginUser() {
 
     } else {
         if (foundUser.password === passwordInput) {
+            // entrar como usuario
             showMessageLogin(successMessage("Hello again!", "Login"));
 
         } else {
@@ -95,7 +105,7 @@ function loginUser() {
     }
 }
 
-
+// find your pawMate
 // /^[a-zA-Z0-9_-]{3,15}$/ ->
 // Esta regex permite nombres de usuario que:
 // 	•	Empiecen y terminen con letras o números.

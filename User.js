@@ -7,6 +7,7 @@ class User {
     #email
     #password
 
+    // usar o borrar mensaje
     static message = `No profiles found yet. You can create a new one at any time! And the time, is now...`
     static counter = 0;
 
